@@ -16,12 +16,12 @@ int main()
     read_xml("config.xml", configtree);
     Logging Logger(configtree.get("config.logging.level", 1),//Defaults to INFO if not present in config
                     configtree.get("config.logging.file","log.log")); //Defaults to log.log
-    //std::vector<Station> Stations;
+    boost::asio::io_service io_service;
     Logger.Log(INFO,"Started.");
     boost::ptr_vector<Station> Stations;
     BOOST_FOREACH(ptree::value_type &Entry, configtree.get_child("config.stations"))
     {
-        Station * station = new Station(Entry.second.get<unsigned short>("port"),
+        Station * station = new Station(io_service, Entry.second.get<unsigned short>("port"),
                         Entry.second.get<std::string>("mountpoint"));
 
         BOOST_FOREACH(ptree::value_type &Category, Entry.second.get_child("categories."))
