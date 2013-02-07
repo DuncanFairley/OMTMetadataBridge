@@ -19,9 +19,12 @@ int main()
     std::vector<Station> Stations;
     BOOST_FOREACH(ptree::value_type &Entry, configtree.get_child("config.stations"))
     {
-
-        Station newstation(Entry.second.get<unsigned short>("port"));
-        Stations.push_back(newstation);
+        Station station(Entry.second.get<unsigned short>("port"));
+        BOOST_FOREACH(ptree::value_type &Category, Entry.second.get_child("categories."))
+        {
+            station.addCategory(Category.second.data());
+        }
+        Stations.push_back(station);
     }
     BOOST_FOREACH(Station &station, Stations)
     {
