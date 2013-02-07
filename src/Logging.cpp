@@ -34,7 +34,7 @@ std::string Logging::Now()
     time ( &rawtime );
     timeinfo = localtime ( &rawtime );
 
-    strftime (buffer,80,"%d/%b/%Y %I:%M%p",timeinfo);
+    strftime (buffer,80,"%d/%b/%Y %I:%M:%S%p",timeinfo);
     return buffer;
 }
 void Logging::Log(unsigned int type, const std::string& msg)
@@ -43,6 +43,4 @@ void Logging::Log(unsigned int type, const std::string& msg)
     {
         logstream << "(" <<whatLevel(type) << ") " << Now() <<": " << msg << "\n";
     }
-    else
-        std::cout << "Don't log it";
 }
