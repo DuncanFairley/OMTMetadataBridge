@@ -19,28 +19,19 @@ int main()
     std::vector<Station> Stations;
     BOOST_FOREACH(ptree::value_type &Entry, configtree.get_child("config.stations"))
     {
-        Station station(Entry.second.get<unsigned short>("port"));
+        Station station(Entry.second.get<unsigned short>("port"),
+                        Entry.second.get<std::string>("mountpoint"));
         BOOST_FOREACH(ptree::value_type &Category, Entry.second.get_child("categories."))
         {
             station.addCategory(Category.second.data());
         }
+        Logger.Log(DEBUG,"Retrieved " + station.mountpoint + " from config.xml.");
         Stations.push_back(station);
     }
     BOOST_FOREACH(Station &station, Stations)
     {
         std::cout << "Found station" << std::endl;
     }
-    return 0;
-
-    cout << "Enter XML" << endl;
-    std::string input = "";
-    cin >> input;
-    Station Station(8000);
-    if(Station.hasCategory("test"))
-        cout << "Found eet.";
-    return 0;
-    Song Song(input, Station);
-    cout << "Done" << endl;
     Logger.Log(INFO,"Closed.");
     return 0;
 }

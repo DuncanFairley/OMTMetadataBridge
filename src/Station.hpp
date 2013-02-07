@@ -6,11 +6,12 @@
 class Station
 {
     public:
-        Station(const unsigned short port);
+        Station(const unsigned short port, const std::string mountpoint);
         bool hasCategory(const std::string& category);
-        void addCategory(const std::string& category);
-    private:
+        void addCategory(const std::string category);
         const unsigned short port;
+        const std::string mountpoint;
+    private:
         std::vector<std::string> music_categories;
 };
 

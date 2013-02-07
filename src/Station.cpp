@@ -1,11 +1,11 @@
 #include "Station.hpp"
 #include <algorithm>
 
-Station::Station(const unsigned short port) : port(port)
+Station::Station(const unsigned short port, const std::string mountpoint) : port(port), mountpoint(mountpoint)
 {
     music_categories.push_back("test");
 }
-void Station::addCategory(const std::string& category)
+void Station::addCategory(const std::string category)
 {
     music_categories.push_back(category);
 }
