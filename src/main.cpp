@@ -6,6 +6,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 using boost::property_tree::ptree;
 using namespace std;
 
@@ -15,22 +16,24 @@ int main()
     read_xml("config.xml", configtree);
     Logging Logger(configtree.get("config.logging.level", 1),//Defaults to INFO if not present in config
                     configtree.get("config.logging.file","log.log")); //Defaults to log.log
+    //std::vector<Station> Stations;
     Logger.Log(INFO,"Started.");
-    std::vector<Station> Stations;
+    boost::ptr_vector<Station> Stations;
     BOOST_FOREACH(ptree::value_type &Entry, configtree.get_child("config.stations"))
     {
-        Station station(Entry.second.get<unsigned short>("port"),
+        Station * station = new Station(Entry.second.get<unsigned short>("port"),
                         Entry.second.get<std::string>("mountpoint"));
+
         BOOST_FOREACH(ptree::value_type &Category, Entry.second.get_child("categories."))
         {
-            station.addCategory(Category.second.data());
+            station->addCategory(Category.second.data());
         }
-        Logger.Log(DEBUG,"Retrieved " + station.mountpoint + " from config.xml.");
         Stations.push_back(station);
+        Logger.Log(DEBUG,"Retrieved " + station->mountpoint + " from config.xml.");
     }
     BOOST_FOREACH(Station &station, Stations)
     {
-        std::cout << "Found station" << std::endl;
+        std::cout << "Found station: " << station.mountpoint << std::endl;
     }
     Logger.Log(INFO,"Closed.");
     return 0;
