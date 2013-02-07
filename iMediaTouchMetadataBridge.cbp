@@ -32,12 +32,25 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="src/Song.cpp" />
+		<Unit filename="src/Song.hpp" />
+		<Unit filename="src/Station.cpp" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/station.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<lib_finder disable_auto="1" />
 			<debugger />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
