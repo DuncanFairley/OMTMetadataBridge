@@ -32,6 +32,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Linker>
+			<Add option="-lboost_system" />
+			<Add option="-lpthread" />
+		</Linker>
 		<Unit filename="src/Logging.cpp" />
 		<Unit filename="src/Logging.hpp" />
 		<Unit filename="src/Song.cpp" />
