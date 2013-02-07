@@ -9,13 +9,13 @@
 #include <boost/ptr_container/ptr_vector.hpp>
 using boost::property_tree::ptree;
 using namespace std;
-
+Logging Logger;
 int main()
 {
     ptree configtree;
     read_xml("config.xml", configtree);
-    Logging Logger(configtree.get("config.logging.level", 1),//Defaults to INFO if not present in config
-                    configtree.get("config.logging.file","log.log")); //Defaults to log.log
+    //TODO: Logging class reads the config.xml too. Avoid the extra parsing.
+
     boost::asio::io_service io_service;
     Logger.Log(INFO,"Started.");
     boost::ptr_vector<Station> Stations;
@@ -30,10 +30,6 @@ int main()
         }
         Stations.push_back(station);
         Logger.Log(DEBUG,"Retrieved " + station->mountpoint + " from config.xml.");
-    }
-    BOOST_FOREACH(Station &station, Stations)
-    {
-        std::cout << "Found station: " << station.mountpoint << std::endl;
     }
     io_service.run();
     Logger.Log(INFO,"Closed.");

@@ -1,10 +1,22 @@
 #include "Logging.hpp"
 #include <iostream>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 
-Logging::Logging(unsigned int level, const std::string& filename)
+using boost::property_tree::ptree;
+
+Logging::Logging()
 {
+    ptree configtree;
+    read_xml("config.xml", configtree);
+    setLogLevel(configtree.get("config.logging.level", 1));//Defaults to INFO if not present in config
+    setLogFile(configtree.get("config.logging.file","log.log")); //Defaults to log.log
+}
+void Logging::setLogFile(const std::string& filename)
+{
+    if(logstream.is_open())
+        logstream.close();
     logstream.open(filename.c_str(), std::ofstream::out | std::ofstream::app);
-    setLogLevel(level);
 }
 Logging::~Logging()
 {
@@ -43,4 +55,5 @@ void Logging::Log(unsigned int type, const std::string& msg)
     {
         logstream << "(" <<whatLevel(type) << ") " << Now() <<": " << msg << "\n";
     }
+    logstream.flush();
 }

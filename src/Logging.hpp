@@ -13,15 +13,16 @@
 class Logging
 {
     public:
-        Logging(unsigned int level, const std::string& filename);
+        Logging();
         ~Logging();
         void Log(unsigned int type, const std::string& msg);
         void setLogLevel(unsigned int level);
+        void setLogFile(const std::string& filename);
     private:
         unsigned int level;
         std::string whatLevel(unsigned int level);
         std::string Now();
         std::ofstream logstream;
 };
-
+extern Logging Logger;
 #endif // LOGGING_HPP

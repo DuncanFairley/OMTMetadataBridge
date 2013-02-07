@@ -1,4 +1,5 @@
 #include "Station.hpp"
+#include "Logging.hpp"
 #include <algorithm>
 
 Station::Station(boost::asio::io_service& io_service, const unsigned short port, const std::string mountpoint) : socket_(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port)), port(port), mountpoint(mountpoint)
@@ -9,16 +10,20 @@ Station::Station(boost::asio::io_service& io_service, const unsigned short port,
 void Station::start_receive()
 {
     socket_.async_receive_from(
-        boost::asio::buffer(recv_buffer_), remote_endpoint_,
+        boost::asio::buffer(data_, max_buffer), remote_endpoint_,
         boost::bind(&Station::receive_handler, this,
         boost::asio::placeholders::error,
         boost::asio::placeholders::bytes_transferred));
 }
-void Station::receive_handler(const boost::system::error_code& error, std::size_t)
+
+void Station::receive_handler(const boost::system::error_code& error, std::size_t reclen)
 {
     if (!error || error == boost::asio::error::message_size)
     {
-        std::cout << "Received data on " << port << std::endl;
+        data_[std::min(max_buffer,(int)reclen)] = '\0';//Don't null terminate somewhere above the buffer size
+        if(reclen > max_buffer)
+            Logger.Log(WARN,"Recieved data exceeding max length.");
+        std::cout << "Received data on " << port << ": " << data_ << std::endl;
         start_receive();
     }
 }
