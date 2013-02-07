@@ -13,7 +13,8 @@ int main()
 {
     ptree configtree;
     read_xml("config.xml", configtree);
-    Logging Logger(configtree.get("config.logging.level", 1), configtree.get("config.logging.file","log.log"));
+    Logging Logger(configtree.get("config.logging.level", 1),//Defaults to INFO if not present in config
+                    configtree.get("config.logging.file","log.log")); //Defaults to log.log
     Logger.Log(INFO,"Started.");
     return 0;
 
