@@ -1,6 +1,6 @@
 tests/
 bin/
-iMediaTouchMetadataBridge.layout
+OMTMetadataBridge.layout
 log.log
 config.xml
-iMediaTouchMetadataBridge.depend
+OMTMetadataBridge.depend
