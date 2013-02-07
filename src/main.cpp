@@ -35,6 +35,7 @@ int main()
     {
         std::cout << "Found station: " << station.mountpoint << std::endl;
     }
+    io_service.run();
     Logger.Log(INFO,"Closed.");
     return 0;
 }
