@@ -13,7 +13,7 @@ int main()
 {
     ptree configtree;
     read_xml("config.xml", configtree);
-    Logging Logger(DEBUG, "log.log");
+    Logging Logger(configtree.get("config.logging.level", 1), configtree.get("config.logging.file","log.log"));
     Logger.Log(INFO,"Started.");
     return 0;
 
@@ -26,6 +26,6 @@ int main()
     return 0;
     Song Song(input, Station);
     cout << "Done" << endl;
-    Logger.Log(INFO,"Exited gracefully.");
+    Logger.Log(INFO,"Closed.");
     return 0;
 }
