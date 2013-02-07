@@ -16,6 +16,17 @@ int main()
     Logging Logger(configtree.get("config.logging.level", 1),//Defaults to INFO if not present in config
                     configtree.get("config.logging.file","log.log")); //Defaults to log.log
     Logger.Log(INFO,"Started.");
+    std::vector<Station> Stations;
+    BOOST_FOREACH(ptree::value_type &Entry, configtree.get_child("config.stations"))
+    {
+
+        Station newstation(Entry.second.get<unsigned short>("port"));
+        Stations.push_back(newstation);
+    }
+    BOOST_FOREACH(Station &station, Stations)
+    {
+        std::cout << "Found station" << std::endl;
+    }
     return 0;
 
     cout << "Enter XML" << endl;
