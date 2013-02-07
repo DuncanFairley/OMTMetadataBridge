@@ -1,3 +1,6 @@
 tests/
 bin/
 iMediaTouchMetadataBridge.layout
+log.log
+config.xml
+iMediaTouchMetadataBridge.depend
