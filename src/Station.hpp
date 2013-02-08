@@ -6,14 +6,15 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 
-#define max_buffer 1024
+#define max_buffer 2048 //Might need to increase this?
 class Station
 {
     private:
         std::vector<std::string> music_categories;
         boost::asio::ip::udp::socket socket_;
         boost::asio::ip::udp::endpoint remote_endpoint_;
-        char data_[max_buffer];
+        char rec_data[max_buffer];
+        void parse_data(std::stringstream& data_stream);
         void start_receive();
         void receive_handler(const boost::system::error_code& error, std::size_t);
     public:
