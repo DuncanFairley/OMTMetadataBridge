@@ -3,6 +3,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
+#include "Song.hpp"
 #include <algorithm>
 
 using boost::property_tree::ptree;
@@ -26,10 +27,12 @@ void Station::parse_data(std::stringstream& data_stream)
     read_xml(data_stream, playlist);
     BOOST_FOREACH(ptree::value_type &Entry, playlist.get_child("PlayList"))
     {
-        if(Entry.second.get<std::string>("<xmlattr>.Type") == "Playing")
-            std::cout << "Type is Playing" << std::endl;
-        if(hasCategory(Entry.second.get<std::string>("<xmlattr>.Category")))
-            std:: cout << "Has category: " << Entry.second.get<std::string>("<xmlattr>.Category") << std::endl;
+        if(Entry.second.get<std::string>("<xmlattr>.Type") == "Playing" &&
+            hasCategory(Entry.second.get<std::string>("<xmlattr>.Category")))
+        {
+            Song sng = Song(Entry.second.get_child("<xmlattr>"));
+        }
+
     }
 }
 void Station::receive_handler(const boost::system::error_code& error, std::size_t reclen)
