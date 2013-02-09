@@ -38,8 +38,6 @@
 		</Linker>
 		<Unit filename="src/Logging.cpp" />
 		<Unit filename="src/Logging.hpp" />
-		<Unit filename="src/Song.cpp" />
-		<Unit filename="src/Song.hpp" />
 		<Unit filename="src/Station.cpp" />
 		<Unit filename="src/Station.hpp" />
 		<Unit filename="src/main.cpp" />
