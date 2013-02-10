@@ -20,7 +20,7 @@ int main()
     read_xml("config.xml", configtree);
     Logger.init(); //Relies on configtree
     Logger.Log(INFO,"Started.");
-    std::string icecast_admin_user, icecast_admin_password, icecast_hostname;
+    std::string icecast_admin_user, icecast_admin_password, icecast_host;
     if(configtree.get_optional<std::string>("config.icecast"))
     {
         Logger.Log(DEBUG, "Reading Icecast block in config.xml");
@@ -28,7 +28,7 @@ int main()
         {
             icecast_admin_user = configtree.get<std::string>("config.icecast.admin_user");
             icecast_admin_password = configtree.get<std::string>("config.icecast.admin_password");
-            icecast_hostname = configtree.get<std::string>("config.icecast.hostname");
+            icecast_host = configtree.get<std::string>("config.icecast.host");
         }
         catch(boost::property_tree::ptree_bad_path& e)
         {
