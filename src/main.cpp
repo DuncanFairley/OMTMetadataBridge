@@ -6,6 +6,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+
 #include <boost/foreach.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -18,10 +19,28 @@ int main()
 
     read_xml("config.xml", configtree);
     Logger.init(); //Relies on configtree
-    //TODO: Logging class reads the config.xml too. Avoid the extra parsing.
+    Logger.Log(INFO,"Started.");
+    std::string icecast_admin_user, icecast_admin_password, icecast_hostname;
+    if(configtree.get_optional<std::string>("config.icecast"))
+    {
+        Logger.Log(DEBUG, "Reading Icecast block in config.xml");
+        try
+        {
+            icecast_admin_user = configtree.get<std::string>("config.icecast.admin_user");
+            icecast_admin_password = configtree.get<std::string>("config.icecast.admin_password");
+            icecast_hostname = configtree.get<std::string>("config.icecast.hostname");
+        }
+        catch(boost::property_tree::ptree_bad_path& e)
+        {
+            std::string invalidpath = e.path<boost::property_tree::path>().dump();
+            std::cerr << "(Fatal) " << invalidpath << " doesn't exist." << std::endl;
+            Logger.Log(ERROR,invalidpath + " needs to exist if config.icecast is defined.");
+            return 1;
+        }
+    }
 
     boost::asio::io_service io_service;
-    Logger.Log(INFO,"Started.");
+
     boost::ptr_vector<Station> Stations;
     BOOST_FOREACH(ptree::value_type &Entry, configtree.get_child("config.stations"))
     {
