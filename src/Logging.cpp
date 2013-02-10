@@ -1,17 +1,15 @@
 #include "Logging.hpp"
 #include <iostream>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
+
 
 using boost::property_tree::ptree;
 
-Logging::Logging()
+void Logging::init()
 {
-    ptree configtree;
-    read_xml("config.xml", configtree);
     setLogLevel(configtree.get("config.logging.level", 1));//Defaults to INFO if not present in config
     setLogFile(configtree.get("config.logging.file","log.log")); //Defaults to log.log
 }
+
 void Logging::setLogFile(const std::string& filename)
 {
     if(logstream.is_open())

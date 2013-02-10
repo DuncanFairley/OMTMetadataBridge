@@ -12,10 +12,12 @@
 using boost::property_tree::ptree;
 using namespace std;
 Logging Logger;
+ptree configtree;
 int main()
 {
-    ptree configtree;
+
     read_xml("config.xml", configtree);
+    Logger.init(); //Relies on configtree
     //TODO: Logging class reads the config.xml too. Avoid the extra parsing.
 
     boost::asio::io_service io_service;

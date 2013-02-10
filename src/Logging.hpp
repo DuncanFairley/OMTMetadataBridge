@@ -3,6 +3,9 @@
 
 #include <string>
 #include <fstream>
+#include <boost/property_tree/ptree.hpp>
+
+extern boost::property_tree::ptree configtree;
 
 #define INFO 1
 #define WARN 2
@@ -13,8 +16,8 @@
 class Logging
 {
     public:
-        Logging();
         ~Logging();
+        void init();
         void Log(unsigned int type, const std::string& msg);
         void setLogLevel(unsigned int level);
         void setLogFile(const std::string& filename);
