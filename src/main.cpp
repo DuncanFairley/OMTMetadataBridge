@@ -1,11 +1,14 @@
 #include <iostream>
 #include "Logging.hpp"
 #include "Station.hpp"
+#include "Song.hpp"
+
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
+
 using boost::property_tree::ptree;
 using namespace std;
 Logging Logger;

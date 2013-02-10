@@ -3,12 +3,13 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
+#include <boost/scoped_ptr.hpp>
 #include "Song.hpp"
 #include <algorithm>
 
 using boost::property_tree::ptree;
 
-Station::Station(boost::asio::io_service& io_service, const unsigned short port, const std::string mountpoint) : socket_(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port)), port(port), mountpoint(mountpoint)
+Station::Station(boost::asio::io_service& io_service, const unsigned short port, const std::string mountpoint) : io_service(io_service), socket_(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port)), port(port), mountpoint(mountpoint)
 {
     //music_categories.push_back("test");
     start_receive();
@@ -30,7 +31,7 @@ void Station::parse_data(std::stringstream& data_stream)
         if(Entry.second.get<std::string>("<xmlattr>.Type") == "Playing" &&
             hasCategory(Entry.second.get<std::string>("<xmlattr>.Category")))
         {
-            Song sng = Song(Entry.second.get_child("<xmlattr>"));
+            boost::scoped_ptr<Song>sng (new Song(io_service, Entry.second.get_child("<xmlattr>")));
         }
 
     }

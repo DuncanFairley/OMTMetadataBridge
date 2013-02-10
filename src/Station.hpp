@@ -10,6 +10,7 @@
 class Station
 {
     private:
+        boost::asio::io_service& io_service;
         std::vector<std::string> music_categories;
         boost::asio::ip::udp::socket socket_;
         boost::asio::ip::udp::endpoint remote_endpoint_;
