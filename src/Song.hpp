@@ -7,7 +7,7 @@ class Song
 {
     public:
         Song(boost::asio::io_service& io_service, boost::property_tree::ptree& Entry);
-        void updateIcecast(std::string& mountpoint);
+        void updateIcecast(std::string& mountpoint, std::string& icecastAdminUser, std::string& icecastAdminPassword);
     private:
 
         std::string Title;

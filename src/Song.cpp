@@ -34,12 +34,12 @@ std::string urlencode(const std::string &s)
     }
     return escaped;
 }
-void Song::updateIcecast(std::string& mountpoint)
+void Song::updateIcecast(std::string& mountpoint, std::string& icecastAdminUser, std::string& icecastAdminPassword)
 {
     std::ostream request_stream(&request_);
     request_stream << "GET " << "/admin/metadata?song=" << urlencode(Title+" - "+Artist) << "&mount=" << mountpoint << "&mode=updinfo HTTP/1.0\r\n";
     request_stream << "Host: " << "hotdogradio.com:8000" << "\r\n";
-    request_stream << "Authorization: Basic " <<
+    request_stream << "Authorization: Basic " << urlencode(icecastAdminUser + ":" + icecastAdminPassword) << "\r\n";
     request_stream << "Accept: */*\r\n";
     request_stream << "Connection: close\r\n\r\n";
     //Todo continue with http://www.boost.org/doc/libs/1_47_0/doc/html/boost_asio/example/http/client/async_client.cpp
