@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+	<mounts>
+		<!-- There must be one defined mount for each port you intend to listen on-->
+		<mount>
+			<port>9000</port><!-- Port to listen on for incoming UDP data from OMT-->
+			<!-- List of categories from OMT to accept. If no categories are defined, all Entries from OMT are accepted. 
+			<accepted-categories>
+				<category>ABC</category>
+				<category>XYZ</category>
+			</accepted-categories> -->
+			<icecastHTTP> <!-- If defined, will update Icecast server via HTTP -->
+				<hostname>localhost:8000</hostname> <!-- Location of icecast server -->
+				<admin-user>admin</admin-user> <!-- admin user credentials from icecast.xml -->
+				<admin-password>password</admin-password>
+				<mountpoint>/live.mp3</mountpoint>
+			</icecastHTTP>
+		</mount>
+	</mounts>
+	<logging>
+		<level>4</level> <!-- 4 Debug, 3 Error, 2 Warn, 1 Info(Default), 0 Off -->
+		<file>log.log</file>
+	</logging>
+</config>
