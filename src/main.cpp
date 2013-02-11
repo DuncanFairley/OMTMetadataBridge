@@ -11,15 +11,19 @@
 #include <boost/ptr_container/ptr_vector.hpp>
 
 using boost::property_tree::ptree;
-using namespace std;
+
 Logging Logger;
-ptree configtree;
+Config Config;
+
+
 int main()
 {
-
-    read_xml("config.xml", configtree);
+    if(!Config.init())
+    {
+        std::cerr << "(Fatal) Unable to read config.xml" << std::endl;
+        return 1;
+    }
     Logger.init(); //Relies on configtree
-    Logger.Log(INFO,"Started.");
     std::string icecast_admin_user, icecast_admin_password, icecast_host;
     if(configtree.get_optional<std::string>("config.icecast"))
     {

@@ -36,6 +36,8 @@
 			<Add option="-lboost_system" />
 			<Add option="-lpthread" />
 		</Linker>
+		<Unit filename="src/Config.cpp" />
+		<Unit filename="src/Config.hpp" />
 		<Unit filename="src/Logging.cpp" />
 		<Unit filename="src/Logging.hpp" />
 		<Unit filename="src/Song.cpp" />

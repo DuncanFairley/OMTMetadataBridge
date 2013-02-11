@@ -8,6 +8,7 @@ void Logging::init()
 {
     setLogLevel(configtree.get("config.logging.level", 1));//Defaults to INFO if not present in config
     setLogFile(configtree.get("config.logging.file","log.log")); //Defaults to log.log
+    Log(INFO,"Started.");
 }
 
 void Logging::setLogFile(const std::string& filename)
@@ -18,6 +19,7 @@ void Logging::setLogFile(const std::string& filename)
 }
 Logging::~Logging()
 {
+    Log(INFO,"Exited.");
     logstream.close();
 }
 void Logging::setLogLevel(unsigned int level)

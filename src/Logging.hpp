@@ -22,7 +22,7 @@ class Logging
         void setLogLevel(unsigned int level);
         void setLogFile(const std::string& filename);
     private:
-        unsigned int level;
+        unsigned int level = DEBUG;
         std::string whatLevel(unsigned int level);
         std::string Now();
         std::ofstream logstream;
